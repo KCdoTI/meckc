@@ -106,3 +106,8 @@ Os projetos são persistidos em **localStorage** com a chave `mente_construcao_i
 ### 2026-03-17 — Configuração para Vercel
 - **`vite.config.ts`:** `define` atualizado para ler `Gemini_API_Key` (nome da variável no Vercel) com fallback para `GEMINI_API_KEY`
 - **`vercel.json`:** Criado com rewrite SPA para suportar roteamento client-side no Vercel
+
+### 2026-03-17 — Correção da geração de PDF
+- **Problema:** `jspdf` estava na versão `^4.2.1`, que possui breaking changes na API (setFont, text com arrays, save). O `pdfService.ts` usa a API da v2.
+- **Solução:** Downgrade para `^2.5.1` em `package.json`. Rodar `npm install` para aplicar.
+- **Arquivo alterado:** `package.json`
