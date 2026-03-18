@@ -110,5 +110,5 @@ Os projetos são persistidos em **localStorage** com a chave `mente_construcao_i
 ### 2026-03-17 — Correção da geração de PDF
 - **Problema 1:** `jspdf` estava na versão `^4.2.1` com breaking changes. Downgrade para `^2.5.1`.
 - **Problema 2:** `App.tsx` usava `import()` dinâmico assíncrono para chamar `exportToPDF` — o browser bloqueava o download por não ser ação direta do usuário. Corrigido com import estático.
-- **Problema 3:** `doc.save()` do jsPDF usa `dispatchEvent` em elemento fora do DOM, ignorado por alguns browsers. Substituído por criação manual de `<a>` com `appendChild` + `click()` + `removeChild`.
+- **Problema 3:** Blob URL download bloqueado pelo Vercel/browser sem erro visível. Solução final: substituído jsPDF inteiramente por `window.open()` + `window.print()`. Abre nova aba com HTML/CSS formatado e o browser salva como PDF nativamente.
 - **Arquivos alterados:** `package.json`, `src/App.tsx`, `src/services/pdfService.ts`
