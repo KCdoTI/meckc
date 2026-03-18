@@ -5,6 +5,7 @@ import IdeaWizard from './components/IdeaWizard';
 import IdeaCard from './components/IdeaCard';
 import GeminiAssistant from './components/GeminiAssistant';
 import { Idea } from './types';
+import { exportToPDF } from './services/pdfService';
 
 export default function App() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
@@ -207,9 +208,7 @@ export default function App() {
 
               <div className="mt-12 pt-8 border-t-2 border-slate-900 flex gap-4">
                 <button 
-                  onClick={() => {
-                    import('./services/pdfService').then(m => m.exportToPDF(selectedIdea));
-                  }}
+                  onClick={() => exportToPDF(selectedIdea)}
                   className="brutalist-button flex-1"
                 >
                   Baixar PDF de Análise

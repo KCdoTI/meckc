@@ -108,6 +108,7 @@ Os projetos são persistidos em **localStorage** com a chave `mente_construcao_i
 - **`vercel.json`:** Criado com rewrite SPA para suportar roteamento client-side no Vercel
 
 ### 2026-03-17 — Correção da geração de PDF
-- **Problema:** `jspdf` estava na versão `^4.2.1`, que possui breaking changes na API (setFont, text com arrays, save). O `pdfService.ts` usa a API da v2.
-- **Solução:** Downgrade para `^2.5.1` em `package.json`. Rodar `npm install` para aplicar.
-- **Arquivo alterado:** `package.json`
+- **Problema 1:** `jspdf` estava na versão `^4.2.1` com breaking changes. Downgrade para `^2.5.1`.
+- **Problema 2:** `App.tsx` usava `import()` dinâmico assíncrono para chamar `exportToPDF` — o browser bloqueava o download por não ser ação direta do usuário. Corrigido com import estático.
+- **Problema 3:** `doc.save()` do jsPDF usa `dispatchEvent` em elemento fora do DOM, ignorado por alguns browsers. Substituído por criação manual de `<a>` com `appendChild` + `click()` + `removeChild`.
+- **Arquivos alterados:** `package.json`, `src/App.tsx`, `src/services/pdfService.ts`

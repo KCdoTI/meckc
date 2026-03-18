@@ -43,5 +43,13 @@ export const exportToPDF = (idea: Idea) => {
   doc.setTextColor(148, 163, 184); // slate-400
   doc.text(`Gerado em: ${new Date(idea.createdAt).toLocaleDateString()}`, margin, 280);
 
-  doc.save(`${idea.name.replace(/\s+/g, '_')}_Proposta.pdf`);
+  const blob = doc.output('blob');
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `${idea.name.replace(/\s+/g, '_')}_Proposta.pdf`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
 };
